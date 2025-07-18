@@ -7,7 +7,7 @@ Ce guide pas à pas vous révélera comment créer et déployer un environnement
 Ce tutoriel détaillé vous guidera à travers chaque étape pour installer et configurer votre environnement n8n + WAHA, et ainsi bâtir une base solide pour des workflows WhatsApp puissants.
 
 Pré-requis
-Avoir Docker Desktop installé Téléchargez-le ici
+Avoir Docker Desktop installé Téléchargez-le ici : https://www.docker.com/products/docker-desktop/
 
 Système d'exploitation Windows 10, Windows 11 ou macOS
 
