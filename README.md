@@ -174,6 +174,7 @@ Copiez l'URL de test qui s'affiche au-dessus du nœud Webhook dans n8n. Elle res
 CORRECTION IMPORTANTE : URL du Webhook dans WAHA
 
 Pour que WAHA (qui est un autre conteneur Docker) puisse communiquer avec n8n, il est préférable d'utiliser le nom du service n8n directement au sein du réseau Docker.
+
 Vous DEVEZ modifier l'URL que vous venez de copier avant de la coller dans WAHA.
 
 Remplacez host.docker.internal par n8n (qui est le nom du service n8n dans votre fichier docker-compose.yml).
@@ -203,22 +204,24 @@ N'envoyez PAS un message de votre numéro connecté à WAHA à lui-même, cela n
 Dès que le message sera envoyé depuis l'autre numéro, vous devriez voir les données du message apparaître dans le panneau de sortie de votre nœud Webhook dans n8n.
 
 Conclusion
+
 Félicitations ! Vous disposez maintenant d'une structure complète pour créer votre environnement local d'automatisation WhatsApp avec n8n et WAHA. Cette base est parfaite pour développer et tester vos workflows !
 
 Ressources Supplémentaires
 Documentation de WAHA
 
 Prochaine Étape : Créer un Agent IA et des Workflows Avancés
+
 Ce dépôt vous fournit l'infrastructure. L'étape suivante est de construire des workflows plus complexes, y compris l'intégration d'un agent IA pour des réponses intelligentes.
+
 Nous préparons un tutoriel vidéo détaillé et un nouveau dépôt GitHub dédié qui vous guidera dans la création de votre premier agent IA intelligent sur cette base, incluant la configuration de la mémoire de chat et les réponses automatiques.
 
 [Lien vers la vidéo tutoriel sur l'agent IA (À venir)]
 
 [Lien vers le dépôt GitHub de l'agent IA (À venir)]
 
-Dernière mise à jour : 07/05/2025
-
 Passez à la Production : Déploiement Cloud et Services d'Agence
+
 Ce tutoriel vous a guidé dans la mise en place d'une infrastructure locale performante, idéale pour le développement, les tests, l'apprentissage rapide et la confidentialité de vos données initiales avec n8n open source.
 
 Pour un fonctionnement 24h/24, une fiabilité accrue et une disponibilité permanente, le déploiement de votre agent IA et de vos workflows n8n est essentiel. Nous proposons plusieurs options adaptées à vos besoins spécifiques :
