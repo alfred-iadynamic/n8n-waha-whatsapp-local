@@ -246,7 +246,7 @@ docker-compose logs
 - **Disponibilité 24h/24** garantie
 - **Performances optimisées** 
 - **Accessibilité mondiale**
-- Serveurs : DigitalOcean, AWS, Google Cloud
+- Serveurs : Hostinger, AWS, Google Cloud
 
 #### **Serveur dédié**
 - **Contrôle total** de l'infrastructure
@@ -280,7 +280,7 @@ Notre agence **IA Dynamic** accompagne les entreprises dans leur transformation 
 
 ### 🚀 Contactez-nous maintenant !
 
-**Obtenez un audit gratuit de votre business et découvrez comment l'IA peut révolutionner vos opérations !**
+**Obtenez un audit de votre business et découvrez comment l'IA peut révolutionner vos opérations !**
 
 **📧 Nos contacts :**
 - **Email** : `contact@iadynamic.fr`
