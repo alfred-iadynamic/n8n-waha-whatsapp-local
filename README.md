@@ -97,12 +97,12 @@ docker-compose up -d
 **Deux versions disponibles dans le repository :**
 
 **🚀 Version Rapide (Débutants) :**
-- Fichier : `workflow-simple.json`
+- Fichier : `workflow-simple-ia-dynamic.json`
 - Agent IA complet et fonctionnel
 - Import rapide pour tester immédiatement
 
 **📚 Version Documentée (Apprentissage) :**
-- Fichier : `workflow-documenté.json` 
+- Fichier : `workflow-documenté-ia-dynamic.json` 
 - Sticky notes explicatives
 - Parfait pour comprendre chaque étape
 
