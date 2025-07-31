@@ -1,0 +1,289 @@
+{
+  "name": "My workflow 3",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "webhook",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "99352644-e4e8-45df-87ad-1a1a4bdaefbd",
+      "name": "Webhook",
+      "webhookId": "41c483e8-20ce-493f-b36f-fe72bec8aec5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d844e5dc-ade6-47da-92f2-effed423f5a7",
+              "name": "session",
+              "value": "={{ $json.body.session }}",
+              "type": "string"
+            },
+            {
+              "id": "a8f84869-bc1f-4f72-8d07-80ad13c1a57e",
+              "name": "event",
+              "value": "={{ $json.body.event }}",
+              "type": "string"
+            },
+            {
+              "id": "fb5fe057-e106-4a80-ba57-d3c104598d03",
+              "name": "pushName",
+              "value": "={{ $json.body.payload._data.Info.PushName }}",
+              "type": "string"
+            },
+            {
+              "id": "24f60e61-6bf8-4ada-a982-983b3022cb93",
+              "name": "payload_id",
+              "value": "={{ $json.body.payload.id }}",
+              "type": "string"
+            },
+            {
+              "id": "821b267c-db34-486e-aad5-7bf5897f79d8",
+              "name": "message",
+              "value": "={{ $json.body.payload.message }}",
+              "type": "string"
+            },
+            {
+              "id": "77958fb2-10ad-469b-99db-e0df2488502e",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "fc2e19a3-2387-41af-9fbf-77396738dce7",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "=  {{ $json.event }}",
+                    "rightValue": "message",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "c42df346-596e-414b-911f-358a7d4ae655"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "79dbbabc-6e9c-4aec-b840-9215cc1fe5c6",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        624,
+        0
+      ],
+      "id": "9299aad0-c652-4bb5-a6e3-36f85a9793bf",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        496,
+        208
+      ],
+      "id": "18473625-b620-405a-830f-d054b7cc0ce2",
+      "name": "OpenAI Chat Model"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        640,
+        208
+      ],
+      "id": "cd176b69-94cd-4b5f-9d2f-e9f764111d75",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Seen",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        976,
+        0
+      ],
+      "id": "76dc77f8-e0be-4d4f-bbe2-2f230cce0a6f",
+      "name": "Send Seen",
+      "credentials": {
+        "wahaApi": {
+          "id": "IE0XOEtPd0fvLlfo",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        1184,
+        0
+      ],
+      "id": "fb3f97dd-21ee-429f-ab12-e2d89b96b377",
+      "name": "Send a text message",
+      "credentials": {
+        "wahaApi": {
+          "id": "IE0XOEtPd0fvLlfo",
+          "name": "WAHA account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send Seen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Seen": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "6ea048af-4a39-4396-a53e-a367b3adb8f6",
+  "meta": {
+    "instanceId": "a0569af41ea226eb225ff4addd47ed90127a5c87c35a3e00e0232320f757af36"
+  },
+  "id": "TzD4gMp5OM4RfTgU",
+  "tags": []
+}
