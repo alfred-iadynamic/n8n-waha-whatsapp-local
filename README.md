@@ -47,6 +47,8 @@ docker-compose up -d
 
 *⏱️ Première fois : 3-5 minutes de téléchargement*
 
+*⚠️ En cas de conflit de port 5678 : Modifiez le fichier `docker-compose.yml` en changeant `"5678:5678"` en `"5679:5678"`*
+
 ### 4. Connectez WhatsApp
 
 **Interface WAHA :**
@@ -77,32 +79,54 @@ docker-compose up -d
    - **HTTP Method** : POST
    - **Path** : webhook
 
-**⚠️ URL importante :**
-- Copiez l'URL de test
+**Configuration du webhook :**
+- Copiez l'URL de test depuis n8n
+- Elle ressemble à : `http://host.docker.internal:5678/webhook-test/webhook`
+- **Utilisez cette URL directement** dans WAHA (ça fonctionne parfaitement !)
 
 **Connectez WAHA à n8n :**
-1. WAHA Dashboard → Paramètres session (icône crayon)
-2. **"Webhooks"** → **"+ Webhook"**
-3. Collez l'URL 
-4. **Events** : Gardez seulement **"message"**
-5. **Update**
+1. Retournez dans WAHA Dashboard (`http://localhost:3000`)
+2. Cliquez sur l'icône **crayon** (paramètres) à côté de votre session "default"
+3. Section **"Webhooks"** → Cliquez **"+ Webhook"**
+4. **URL** : Collez l'URL copiée depuis n8n 
+5. **Events** : Décochez tout SAUF **"message"**
+6. Cliquez **"Update"** pour sauvegarder
 
-### 7. Test final
+### 7. Importez le workflow d'exemple
+
+**Workflow d'agent IA complet :**
+1. Téléchargez le fichier : `workflow-waha-ia-dynamic.json` depuis le repository
+2. Dans n8n : **"Import from File"** → Sélectionnez le fichier
+3. Vous obtenez un **agent IA complet** avec :
+   - **GPT-4** pour des réponses intelligentes
+   - **Mémoire conversationnelle** 
+   - **Marquage "lu"** automatique
+   - **Réponses contextuelles**
+
+### 8. Configuration de l'API OpenAI
+
+**Pour activer l'IA :**
+1. Créez un compte sur [OpenAI](https://platform.openai.com/)
+2. Générez une **API Key**
+3. Dans n8n : Node **"OpenAI Chat Model"** → Credentials → Ajoutez votre clé
+
+### 9. Test final
 
 **Vérification :**
-1. Dans n8n : **"Listen for Test Event"** sur le webhook
+1. **Activez** le workflow importé
 2. **Avec un autre téléphone**, envoyez un message au numéro connecté
-3. ✅ **Vous devriez voir le message apparaître dans n8n !**
+3. ✅ **L'agent IA vous répond intelligemment !**
 
 ## 🎉 Félicitations !
 
-**Vous venez de créer votre infrastructure d'agent IA local !**
+**Vous venez de créer un agent IA WhatsApp complet !**
 
 Votre système peut maintenant :
 - ✅ Recevoir tous les messages WhatsApp
-- ✅ Les traiter avec des workflows personnalisés
-- ✅ Répondre automatiquement
-- ✅ S'intégrer à n'importe quelle IA (OpenAI, Claude, etc.)
+- ✅ Les analyser avec l'intelligence artificielle
+- ✅ Répondre de manière contextuelle et intelligente
+- ✅ Se souvenir des conversations précédentes
+- ✅ Marquer les messages comme lus (UX naturelle)
 
 ## Qu'est-ce que vous venez d'installer ?
 
@@ -133,24 +157,24 @@ Votre système peut maintenant :
 
 ## Exemples de workflows possibles
 
-### 🤖 Répondeur automatique
+### 🤖 Agent IA Intelligent (inclus)
 ```
-Message reçu → Analyser contenu → Répondre selon règles
-```
-
-### 🧠 Agent IA intelligent
-```
-Message reçu → Envoyer à ChatGPT → Répondre avec IA
+Message reçu → IA GPT-4 → Réponse contextuelle + Mémoire
 ```
 
-### 📊 Collecte de données
+### 🏢 Support Client Automatisé
 ```
-Message reçu → Extraire infos → Sauvegarder en base
+Message reçu → Analyser intent → FAQ IA ou Transfer humain
 ```
 
-### 🔔 Notifications multi-plateformes
+### 📊 Collecte de données conversationnelle
 ```
-Message reçu → Alerter par email/Slack/Discord
+Message reçu → Extraire infos → Sauvegarder → Confirmer par IA
+```
+
+### 🔔 Assistant personnel intelligent
+```
+Message reçu → Agenda/Tâches → IA contextuelle → Actions
 ```
 
 ## Structure des données WhatsApp
@@ -258,7 +282,6 @@ Notre agence **IA Dynamic** accompagne les entreprises dans leur transformation 
 **💡 Besoin d'aide pour l'installation ?**
 
 Nous proposons des **accompagnements personnalisés** avec installation complète et formation incluse. Contactez-nous pour transformer votre idée en réalité !
-
 
 
 ## Ressources
