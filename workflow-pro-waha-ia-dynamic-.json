@@ -1,0 +1,394 @@
+{
+  "name": "🤖 Agent IA WhatsApp - IA Dynamic",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 📱 RÉCEPTION WHATSAPP\n\nCe webhook reçoit tous les messages\nenvoyés à votre numéro WhatsApp\nconnecté via WAHA.\n\n**Configuration :**\n- Method: POST\n- Path: webhook\n- URL à configurer dans WAHA",
+        "height": 200,
+        "width": 280
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -120,
+        -140
+      ],
+      "id": "sticky-note-webhook",
+      "name": "Note Webhook"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "webhook",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "99352644-e4e8-45df-87ad-1a1a4bdaefbd",
+      "name": "📱 Webhook WhatsApp",
+      "webhookId": "41c483e8-20ce-493f-b36f-fe72bec8aec5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d844e5dc-ade6-47da-92f2-effed423f5a7",
+              "name": "session",
+              "value": "={{ $json.body.session }}",
+              "type": "string"
+            },
+            {
+              "id": "a8f84869-bc1f-4f72-8d07-80ad13c1a57e",
+              "name": "event",
+              "value": "={{ $json.body.event }}",
+              "type": "string"
+            },
+            {
+              "id": "fb5fe057-e106-4a80-ba57-d3c104598d03",
+              "name": "pushName",
+              "value": "={{ $json.body.payload._data.Info.PushName }}",
+              "type": "string"
+            },
+            {
+              "id": "24f60e61-6bf8-4ada-a982-983b3022cb93",
+              "name": "payload_id",
+              "value": "={{ $json.body.payload.id }}",
+              "type": "string"
+            },
+            {
+              "id": "821b267c-db34-486e-aad5-7bf5897f79d8",
+              "name": "message",
+              "value": "={{ $json.body.payload.message }}",
+              "type": "string"
+            },
+            {
+              "id": "77958fb2-10ad-469b-99db-e0df2488502e",
+              "name": "chatId",
+              "value": "={{ $json.body.payload.from }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        300,
+        0
+      ],
+      "id": "fc2e19a3-2387-41af-9fbf-77396738dce7",
+      "name": "🔧 Nettoyer Données"
+    },
+    {
+      "parameters": {
+        "content": "## 🔧 NETTOYAGE DES DONNÉES\n\nExtrait et organise les informations\nimportantes du message WhatsApp :\n\n- **session** : Session WAHA\n- **event** : Type d'événement\n- **pushName** : Nom de l'expéditeur\n- **message** : Contenu du message\n- **chatId** : ID pour répondre",
+        "height": 200,
+        "width": 280
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        180,
+        -140
+      ],
+      "id": "sticky-note-clean",
+      "name": "Note Nettoyage"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.event }}",
+                    "rightValue": "message",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "c42df346-596e-414b-911f-358a7d4ae655"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        600,
+        0
+      ],
+      "id": "79dbbabc-6e9c-4aec-b840-9215cc1fe5c6",
+      "name": "🚦 Filtre Messages"
+    },
+    {
+      "parameters": {
+        "content": "## 🚦 FILTRE INTELLIGENT\n\nNe traite QUE les vrais messages.\nIgnore les autres événements :\n\n- ❌ Statuts de lecture\n- ❌ Notifications de connexion\n- ❌ Événements système\n- ✅ Messages texte uniquement",
+        "height": 200,
+        "width": 280
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        480,
+        -140
+      ],
+      "id": "sticky-note-filter",
+      "name": "Note Filtre"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Tu es un assistant IA intelligent et serviable. Réponds de manière naturelle et utile aux messages reçus via WhatsApp. Sois concis mais informatif.\n\nMessage reçu : {{ $json.message }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        900,
+        0
+      ],
+      "id": "9299aad0-c652-4bb5-a6e3-36f85a9793bf",
+      "name": "🧠 Agent IA"
+    },
+    {
+      "parameters": {
+        "content": "## 🧠 INTELLIGENCE ARTIFICIELLE\n\n**Agent IA avec mémoire :**\n- Utilise GPT-4.1-mini\n- Se souvient du contexte\n- Répond intelligemment\n- Traite les demandes complexes\n\n**Connecté à :**\n- OpenAI Chat Model\n- Simple Memory Buffer",
+        "height": 200,
+        "width": 280
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        780,
+        -140
+      ],
+      "id": "sticky-note-ai",
+      "name": "Note IA"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        780,
+        280
+      ],
+      "id": "18473625-b620-405a-830f-d054b7cc0ce2",
+      "name": "🤖 OpenAI GPT-4"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1020,
+        280
+      ],
+      "id": "cd176b69-94cd-4b5f-9d2f-e9f764111d75",
+      "name": "💭 Mémoire Conversation"
+    },
+    {
+      "parameters": {
+        "content": "## ⚙️ COMPOSANTS IA\n\n**OpenAI GPT-4 :**\n- Modèle de langage avancé\n- Réponses contextuelles\n- Configuration API Key requise\n\n**Mémoire Buffer :**\n- Retient les conversations\n- Continuité contextuelle\n- Améliore l'expérience utilisateur",
+        "height": 200,
+        "width": 280
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        660,
+        380
+      ],
+      "id": "sticky-note-components",
+      "name": "Note Composants"
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Seen",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        1200,
+        0
+      ],
+      "id": "76dc77f8-e0be-4d4f-bbe2-2f230cce0a6f",
+      "name": "👁️ Marquer Lu",
+      "credentials": {
+        "wahaApi": {
+          "id": "IE0XOEtPd0fvLlfo",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        1500,
+        0
+      ],
+      "id": "fb3f97dd-21ee-429f-ab12-e2d89b96b377",
+      "name": "💬 Envoyer Réponse",
+      "credentials": {
+        "wahaApi": {
+          "id": "IE0XOEtPd0fvLlfo",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 📤 RÉPONSE WHATSAPP\n\n**Marquer Lu :**\n- Simule un comportement humain\n- Message marqué comme lu\n- UX naturelle pour l'utilisateur\n\n**Envoyer Réponse :**\n- Envoie la réponse de l'IA\n- Utilise le même chatId\n- Conversation fluide",
+        "height": 200,
+        "width": 280
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        -140
+      ],
+      "id": "sticky-note-response",
+      "name": "Note Réponse"
+    },
+    {
+      "parameters": {
+        "content": "## 🚀 WORKFLOW AGENT IA WHATSAPP\n\n**Créé par IA Dynamic**\n\n**Flux complet :**\n1. 📱 Réception message WhatsApp\n2. 🔧 Nettoyage des données\n3. 🚦 Filtrage intelligent\n4. 🧠 Traitement par IA\n5. 👁️ Marquer comme lu\n6. 💬 Envoyer réponse\n\n**Configuration requise :**\n- ✅ WAHA connecté à WhatsApp\n- ✅ Webhook configuré\n- ✅ API Key OpenAI\n- ✅ Credentials WAHA dans n8n",
+        "height": 300,
+        "width": 400
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        600,
+        -400
+      ],
+      "id": "sticky-note-overview",
+      "name": "Note Vue d'ensemble"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "📱 Webhook WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "🔧 Nettoyer Données",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🔧 Nettoyer Données": {
+      "main": [
+        [
+          {
+            "node": "🚦 Filtre Messages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🚦 Filtre Messages": {
+      "main": [
+        [
+          {
+            "node": "🧠 Agent IA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🤖 OpenAI GPT-4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "🧠 Agent IA",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "💭 Mémoire Conversation": {
+      "ai_memory": [
+        [
+          {
+            "node": "🧠 Agent IA",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🧠 Agent IA": {
+      "main": [
+        [
+          {
+            "node": "👁️ Marquer Lu",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "👁️ Marquer Lu": {
+      "main": [
+        [
+          {
+            "node": "💬 Envoyer Réponse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "6ea048af-4a39-4396-a53e-a367b3adb8f6",
+  "meta": {
+    "instanceId": "a0569af41ea226eb225ff4addd47ed90127a5c87c35a3e00e0232320f757af36"
+  },
+  "id": "TzD4gMp5OM4RfTgU",
+  "tags": ["IA Dynamic", "WhatsApp", "Agent IA", "Automation"]
+}
