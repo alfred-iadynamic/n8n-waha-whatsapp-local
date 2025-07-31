@@ -94,8 +94,20 @@ docker-compose up -d
 
 ### 7. Importez le workflow d'exemple
 
-**Workflow d'agent IA complet :**
-1. Téléchargez le fichier : `workflow-waha-ia-dynamic.json` depuis le repository
+**Deux versions disponibles dans le repository :**
+
+**🚀 Version Rapide (Débutants) :**
+- Fichier : `workflow-simple.json`
+- Agent IA complet et fonctionnel
+- Import rapide pour tester immédiatement
+
+**📚 Version Documentée (Apprentissage) :**
+- Fichier : `workflow-documenté.json` 
+- Sticky notes explicatives
+- Parfait pour comprendre chaque étape
+
+**Import dans n8n :**
+1. Téléchargez le fichier choisi depuis le repository
 2. Dans n8n : **"Import from File"** → Sélectionnez le fichier
 3. Vous obtenez un **agent IA complet** avec :
    - **GPT-4** pour des réponses intelligentes
