@@ -47,8 +47,6 @@ docker-compose up -d
 
 *⏱️ Première fois : 3-5 minutes de téléchargement*
 
-*⚠️ En cas de conflit de port 5678 : Modifiez le fichier `docker-compose.yml` en changeant `"5678:5678"` en `"5679:5678"`*
-
 ### 4. Connectez WhatsApp
 
 **Interface WAHA :**
@@ -81,13 +79,11 @@ docker-compose up -d
 
 **⚠️ URL importante :**
 - Copiez l'URL de test
-- **Remplacez** `host.docker.internal:5678` par `n8n:5678`
-- URL finale : `http://n8n:5678/webhook-test/webhook`
 
 **Connectez WAHA à n8n :**
 1. WAHA Dashboard → Paramètres session (icône crayon)
 2. **"Webhooks"** → **"+ Webhook"**
-3. Collez l'URL modifiée
+3. Collez l'URL 
 4. **Events** : Gardez seulement **"message"**
 5. **Update**
 
